@@ -100,14 +100,15 @@ SUPPORT
     <http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Test%3A%3AFile%3A%3AClea
     ner>
 
-    For other issues, contact the author.
+    For other issues, or commercial enhancement or support, contact the
+    author..
 
 AUTHOR
     Adam Kennedy (Maintainer), <http://ali.as/>, cpan@ali.as
 
 COPYRIGHT
-    Thank you to Phase N Australia (<http://phase-n.com/>) for permitted the
-    open sourcing and release of this distribution as a spin-off from a
+    Thank you to Phase N Australia (<http://phase-n.com/>) for permitting
+    the open sourcing and release of this distribution as a spin-off from a
     commercial project.
 
     Copyright (c) 2004 Adam Kennedy. All rights reserved. This program is

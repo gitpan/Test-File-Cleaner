@@ -51,7 +51,7 @@ use File::Find::Rule ();
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.01';
+	$VERSION = '0.02';
 }
 
 
@@ -385,7 +385,7 @@ Bugs should be submitted via the CPAN bug tracker, located at
 
 L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Test%3A%3AFile%3A%3ACleaner>
 
-For other issues, contact the author.
+For other issues, or commercial enhancement or support, contact the author..
 
 =head1 AUTHOR
 
@@ -393,7 +393,7 @@ Adam Kennedy (Maintainer), L<http://ali.as/>, cpan@ali.as
 
 =head1 COPYRIGHT
 
-Thank you to Phase N Australia (L<http://phase-n.com/>) for permitted the
+Thank you to Phase N Australia (L<http://phase-n.com/>) for permitting the
 open sourcing and release of this distribution as a spin-off from a
 commercial project.
 
