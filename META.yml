@@ -1,16 +1,20 @@
-name: Test-File-Cleaner
-version: 0.02
 abstract: Automatically clean up your filesystem after tests
-author: Adam Kennedy<cpan@ali.as>
-license: perl
-distribution_type: module
-build_requires:
+author: Adam Kennedy <adamk@cpan.org>
+build_requires: 
   Test::More: 0.47
-  File::Spec: 0.82
-requires:
-  perl: 5.005
-  File::Find::Rule: 0.02
-no_index:
-  directory:
+distribution_type: module
+generated_by: Module::Install version 0.64
+license: perl
+name: Test-File-Cleaner
+no_index: 
+  directory: 
     - inc
-generated_by: Module::Install version 0.36
+    - t
+requires: 
+  Carp: 0
+  File::Basename: 0
+  File::Find::Rule: 0.02
+  File::Spec: 0.82
+  File::stat: 0
+  perl: 5.005
+version: 0.03

@@ -3,33 +3,33 @@
 # Main testing of Test::File::Cleaner
 
 use strict;
-use lib ();
-use UNIVERSAL 'isa';
-use File::Spec::Functions ':ALL';
 BEGIN {
-	$| = 1;
-	unless ( $ENV{HARNESS_ACTIVE} ) {
-		require FindBin;
-		chdir ($FindBin::Bin = $FindBin::Bin); # Avoid a warning
-		lib->import( catdir( updir(), updir(), 'modules') );
-	}
+	$|  = 1;
+	$^W = 1;
 }
 
 use Test::More 'tests' => 40;
 use File::stat ();
+use File::Spec::Functions ':ALL';
+
+# Load the module to test
 use Test::File::Cleaner ();
+BEGIN {
+	$Test::File::Cleaner::DEBUG = 0;
+}
 
 # Prepare
-my $root = 't.data';
-my $dir1 = catdir( $root, 'dir1' );
-my $states = -d catdir( $root, 'CVS') ? 6 : 2; # Support development testing
+my $root   = catdir( 't',   'data' );
+my $dir1   = catdir( $root, 'dir1' );
+my $states = -d catdir( $root, '.svn') ? 21 : 2; # Support development testing
 
 sub touch($) {
-	open FILE, ">$_[0]" or die "open: $!";
+	open( FILE, ">$_[0]" ) or die "open: $!";
 	print FILE "Foo";
 	close FILE;
 	1;
 }
+
 
 
 
@@ -40,7 +40,7 @@ sub touch($) {
 my $Cleaner1 = Test::File::Cleaner->new( $root );
 isa_ok( $Cleaner1, 'Test::File::Cleaner' );
 is( $Cleaner1->path, $root, '->path return the path' );
-is( scalar(keys %{$Cleaner1->{state}}), $states, 'New cleaner has one state file' );
+is( scalar(keys %{$Cleaner1->{state}}), $states, "New cleaner has $states state file" );
 
 
 
@@ -50,18 +50,18 @@ is( scalar(keys %{$Cleaner1->{state}}), $states, 'New cleaner has one state file
 #####################################################################
 # Create a whole bunch of normal files
 
-{
-ok( mkdir($dir1), 'Created test dir 1' );
-my @normal = qw{one two three four five six};
-@normal = map { catfile( $dir1, $_ ) } @normal;
-foreach my $file ( @normal ) {
-	ok( touch $file, "Wrote test file $file" );
-}
+SCOPE: {
+	ok( mkdir($dir1), 'Created test dir 1' );
+	my @normal = qw{one two three four five six};
+	@normal = map { catfile( $dir1, $_ ) } @normal;
+	foreach my $file ( @normal ) {
+		ok( touch $file, "Wrote test file $file" );
+	}
 
-ok( $Cleaner1->clean, 'Cleaner says it cleaned' );
-foreach ( $dir1, @normal ) {
-	ok( ! -e $_, "Cleaner removed file/dir '$_'" );
-}
+	ok( $Cleaner1->clean, 'Cleaner says it cleaned' );
+	foreach ( $dir1, @normal ) {
+		ok( ! -e $_, "Cleaner removed file/dir '$_'" );
+	}
 }
 
 
@@ -70,18 +70,18 @@ foreach ( $dir1, @normal ) {
 #####################################################################
 # Repeat with DESTROY
 
-{
-ok( mkdir($dir1), 'Created test dir 1' );
-my @normal = qw{one two three four five six};
-@normal = map { catfile( $dir1, $_ ) } @normal;
-foreach my $file ( @normal ) {
-	ok( touch $file, "Wrote test file $file" );
-}
+SCOPE: {
+	ok( mkdir($dir1), 'Created test dir 1' );
+	my @normal = qw{one two three four five six};
+	@normal = map { catfile( $dir1, $_ ) } @normal;
+	foreach my $file ( @normal ) {
+		ok( touch $file, "Wrote test file $file" );
+	}
 
-ok( $Cleaner1->DESTROY, 'Cleaner says it cleaned' );
-foreach ( $dir1, @normal ) {
-	ok( ! -e $_, "Cleaner removed file/dir '$_'" );
-}
+	ok( $Cleaner1->DESTROY, 'Cleaner says it cleaned' );
+	foreach ( $dir1, @normal ) {
+		ok( ! -e $_, "Cleaner removed file/dir '$_'" );
+	}
 }
 
 
